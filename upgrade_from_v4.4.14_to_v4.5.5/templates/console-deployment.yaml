@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "minio-operator.console-fullname" . }}
+  name: "console"
   namespace: {{ .Release.Namespace }}
   labels:
   {{- include "minio-operator.labels" . | nindent 4 }}

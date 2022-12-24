@@ -10,3 +10,4 @@ kubectl-minio/crds
 logsearchapi/logsearchapi
 *.log
 .vscode
+upgrade_from_v4.4.14_to_v4.5.5/*.txt*
