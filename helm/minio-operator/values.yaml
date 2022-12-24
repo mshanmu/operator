@@ -3,7 +3,7 @@
 operator:
   image:
     repository: minio/operator
-    tag: v4.3.7
+    tag: v4.4.14
     pullPolicy: IfNotPresent
   imagePullSecrets: []
   initcontainers: []
@@ -31,7 +31,7 @@ operator:
 console:
   image:
     repository: minio/console
-    tag: v0.12.8
+    tag: v0.15.13
     pullPolicy: IfNotPresent
   imagePullSecrets: []
   initcontainers: []
@@ -43,7 +43,9 @@ console:
   resources: {}
   securityContext:
     runAsUser: 1000
+    runAsGroup: 1000
     runAsNonRoot: true
+    fsGroup: 1000
   ingress:
     enabled: false
     labels: {}
@@ -59,7 +61,7 @@ tenants:
     ## Registry location and Tag to download MinIO Server image
     image:
       repository: minio/minio
-      tag: RELEASE.2022-01-08T03-11-54Z
+      tag: RELEASE.2022-04-16T04-26-02Z
       pullPolicy: IfNotPresent
     ## Customize namespace for tenant deployment
     namespace: minio-tenant-1
@@ -137,8 +139,8 @@ tenants:
       secretKey: minio123
     # pool metrics to be read by Prometheus
     metrics:
-      enabled: false
-      port: 9000
+      enabled: true
+      port: 80
     certificate:
       ## Use this field to provide one or more external CA certificates. This is used by MinIO
       ## to verify TLS connections with other applications:
@@ -170,7 +172,11 @@ tenants:
     ## services created by the operator.
     serviceMetadata: {}
     ## Add environment variables to be set in MinIO container (https://github.com/minio/minio/tree/master/docs/config)
-    env: {}
+    env:
+      - name: MINIO_PROMETHEUS_AUTH_TYPE
+        value: "public"
+      - name: GOGC
+        value: "20"
     ## PriorityClassName indicates the Pod priority and hence importance of a Pod relative to other Pods.
     ## This is applied to MinIO pods only.
     ## Refer Kubernetes documentation for details https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass/
