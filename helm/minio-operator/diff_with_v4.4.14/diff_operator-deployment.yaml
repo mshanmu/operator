@@ -1,0 +1,109 @@
+--- /home/mshanmu/git_workspace/mshanmu/operator-v4.4.14/helm/minio-operator/templates/operator-deployment.yaml	2022-12-26 15:04:28.056541631 -0500
++++ operator-deployment.yaml	2022-12-24 14:15:26.671424320 -0500
+@@ -4,76 +4,57 @@
+   name: "minio-operator"
+   namespace: {{ .Release.Namespace }}
+   labels:
+-    {{- include "minio-operator.labels" . | nindent 4 }}
++  {{- include "minio-operator.labels" . | nindent 4 }}
+ spec:
+   replicas: {{ .Values.operator.replicaCount }}
+   selector:
+     matchLabels:
+-      {{- include "minio-operator.selectorLabels" . | nindent 6 }}
++  {{- include "minio-operator.selectorLabels" . | nindent 6 }}
+   template:
+     metadata:
+       labels:
+-        {{- include "minio-operator.selectorLabels" . | nindent 8 }}
++    {{- include "minio-operator.selectorLabels" . | nindent 8 }}
+     spec:
+-    {{- with .Values.operator.imagePullSecrets }}
++      {{- with .Values.operator.imagePullSecrets }}
+       imagePullSecrets:
+-        {{- toYaml . | nindent 8 }}
+-    {{- end }}
++      {{- toYaml . | nindent 8 }}
++      {{- end }}
+       serviceAccountName: minio-operator
+-    {{- with .Values.operator.securityContext }}
++      {{- with .Values.operator.securityContext }}
+       securityContext:
+-        {{- toYaml . | nindent 8 }}
+-    {{- end }}
+-    {{- with .Values.operator.nodeSelector }}
++      {{- toYaml . | nindent 8 }}
++      {{- end }}
++      {{- with .Values.operator.nodeSelector }}
+       nodeSelector:
+-        {{- toYaml . | nindent 8 }}
+-    {{- end }}
+-    {{- with .Values.operator.affinity }}
++      {{- toYaml . | nindent 8 }}
++      {{- end }}
++      {{- with .Values.operator.affinity }}
+       affinity:
+-        {{- toYaml . | nindent 8 }}
+-    {{- end }}
+-    {{- with .Values.operator.tolerations }}
++      {{- toYaml . | nindent 8 }}
++      {{- end }}
++      {{- with .Values.operator.tolerations }}
+       tolerations:
+-        {{- toYaml . | nindent 8 }}
+-    {{- end }}
+-    {{- with .Values.operator.topologySpreadConstraints }}
++      {{- toYaml . | nindent 8 }}
++      {{- end }}
++      {{- with .Values.operator.topologySpreadConstraints }}
+       topologySpreadConstraints:
+-        {{- toYaml . | nindent 8 }}
+-    {{- end }}
++      {{- toYaml . | nindent 8 }}
++      {{- end }}
+       containers:
+         - name: {{ .Chart.Name }}
+           image: "{{ .Values.operator.image.repository }}:{{ .Values.operator.image.tag }}"
+           imagePullPolicy: {{ .Values.operator.image.pullPolicy }}
+-          {{- if or .Values.operator.clusterDomain .Values.operator.nsToWatch }}
+-          env:
+-            {{- if .Values.operator.clusterDomain }}
+-            - name: CLUSTER_DOMAIN
+-              value: {{ .Values.operator.clusterDomain }}
+-            {{- end }}
+-            {{- if .Values.operator.nsToWatch }}
+-            - name: WATCHED_NAMESPACE
+-              value: {{ .Values.operator.nsToWatch }}
+-            {{- end }}
+-          {{ else }}
+           {{- with .Values.operator.env }}
+           env:
+-            {{ toYaml . | nindent 10 }}
+-          {{- end }}
++          {{ toYaml . | nindent 10 }}
+           {{- end }}
+           resources:
+-            {{- toYaml .Values.operator.resources | nindent 12 }}
+-    {{- with .Values.operator.initContainers }}
++          {{- toYaml .Values.operator.resources | nindent 12 }}
++          securityContext:
++          {{- with .Values.operator.containerSecurityContext }}
++          {{- toYaml . | nindent 12 }}
++          {{- end }}
++      {{- with .Values.operator.initContainers }}
+       initContainers:
+-        {{- toYaml . | nindent 8 }}
+-    {{- end}}
+-      affinity:
+-        podAntiAffinity:
+-          requiredDuringSchedulingIgnoredDuringExecution:
+-            - labelSelector:
+-                matchExpressions:
+-                  - key: name
+-                    operator: In
+-                    values:
+-                      - minio-operator
+-              topologyKey: kubernetes.io/hostname
+-
++      {{- toYaml . | nindent 8 }}
++      {{- end}}
