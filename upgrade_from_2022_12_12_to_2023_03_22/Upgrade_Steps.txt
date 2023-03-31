@@ -1,0 +1,68 @@
+Steps:
+=====
+
+1. Create user, groups, buckets and files --> DONE
+
+    [mshanmu@minio-m1 MinIO]$ ./create_minio_config.sh 
+    Creating bucket poya5a0lpzkw3 ...
+    Bucket created successfully `minio/poya5a0lpzkw3`.
+    Added user `poya5a0lpzkw3-user` successfully.
+    Added members {poya5a0lpzkw3-user} to group poya5a0lpzkw3-group successfully.
+    Added policy `poya5a0lpzkw3-1-policy` successfully.
+    Added policy `poya5a0lpzkw3-2-policy` successfully.
+    Added policy `poya5a0lpzkw3-3-policy` successfully.
+    Policy `poya5a0lpzkw3-1-policy` is added to group `poya5a0lpzkw3-group`
+    Policy `poya5a0lpzkw3-2-policy` is added to group `poya5a0lpzkw3-group`
+    Policy `poya5a0lpzkw3-3-policy` is added to group `poya5a0lpzkw3-group`
+    ...inIO/file_10mb.txt: 10.00 MiB / 10.00 MiB ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.49 MiB/s 6sCreating bucket rmnsgwyv2r4vz ...
+
+
+2. Helm upgrade --> DONE
+
+   minio - RELEASE.2023-03-24T21-41-23Z
+
+   mc - RELEASE.2023-03-23T20-03-04Z
+
+2a. Check the pods --> DONE
+
+2a. Confirm user, groups, buckets and files are still present and download to check the value --> DONE
+
+3. Test using test scripts --> DONE
+
+    Results:
+
+     Creating bucket  ✔  
+     Copying file /tmp/tmp.nrTCGbsfns-SZ-435  ✔  
+     Copying file /tmp/tmp.5WQolo3yKZ-SZ-10K  ✔  
+     Copying file /tmp/tmp.dNeEs4O0Tm-SZ-1.0M  ✔  
+     Copying file /tmp/tmp.hFyqTYUNpL-SZ-10M  ✔  
+     Copying file /tmp/tmp.HZEaMKp5He-SZ-100M  ✔  
+     Copying file /tmp/tmp.AHGTpkS2A5-SZ-1.0G  ✔  
+     Downloading file tmp.nrTCGbsfns-SZ-435 ...  ✔  
+     Downloading file tmp.5WQolo3yKZ-SZ-10K ...  ✔  
+     Downloading file tmp.dNeEs4O0Tm-SZ-1.0M ...  ✔  
+     Downloading file tmp.hFyqTYUNpL-SZ-10M ...  ✔  
+     Downloading file tmp.HZEaMKp5He-SZ-100M ...  ✔  
+     Downloading file tmp.AHGTpkS2A5-SZ-1.0G ...  ✔  
+     Verified file /tmp/tmp.nrTCGbsfns-SZ-435  ✔  
+     Verified file /tmp/tmp.5WQolo3yKZ-SZ-10K  ✔  
+     Verified file /tmp/tmp.dNeEs4O0Tm-SZ-1.0M  ✔  
+     Verified file /tmp/tmp.hFyqTYUNpL-SZ-10M  ✔  
+     Verified file /tmp/tmp.HZEaMKp5He-SZ-100M  ✔  
+     Verified file /tmp/tmp.AHGTpkS2A5-SZ-1.0G  ✔  
+     Deleting file tmp.nrTCGbsfns-SZ-435  ✔  
+     Deleting file tmp.5WQolo3yKZ-SZ-10K  ✔  
+     Deleting file tmp.dNeEs4O0Tm-SZ-1.0M  ✔  
+     Deleting file tmp.hFyqTYUNpL-SZ-10M  ✔  
+     Deleting file tmp.HZEaMKp5He-SZ-100M  ✔  
+     Deleting file tmp.AHGTpkS2A5-SZ-1.0G  ✔  
+     PUT Gzip accept encoding file  ✔  
+     Deleting Gzip accept encoding file  ✔  
+     Deleting bucket  ✔  
+
+     COMPLETE SUCESS.  
+
+     [mshanmu@minio-m1 MinIO]$ 
+
+
+
