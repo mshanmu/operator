@@ -1,0 +1,54 @@
+Upgrading minio-operator to v5.0.10
+=====================================
+
+operator helm update
+-----------------------
+
+Chart.yaml - DONE
+
+crds - DONE
+
+  modified:   minio.min.io_tenants.yaml
+  new file:   sts.min.io_policybindings.yaml
+
+templates - DONE
+
+  NOTES.txt - M
+  _helpers.tpl - M
+  console-clusterrole.yaml - A
+  console-clusterrolebinding.yaml - A
+  console-configmap.yaml - A
+  console-deployment.yaml - M
+  console-ingress.yaml - M
+  console-secret.yaml - A
+  console-service.yaml - M
+  console-serviceaccount.yaml - A
+  operator-clusterrole.yaml - A
+  operator-clusterrolebinding.yaml - A
+  operator-deployment.yaml - M
+  operator-service.yaml - M
+  sts-service.yaml - A
+  console-ui.yaml - Delete it
+  cluster-role.yaml - Delete it
+  cluster-role-binding.yaml - Delete it
+  serviceaccount.yaml - Delete it
+                                            
+values - DONE
+
+  values.yaml - M
+                                              
+tenant helm update
+--------------------
+
+templates - DONE
+
+  api-ingress.yaml - A
+  console-ingress.yaml -> tenant-console-ingress.yaml - A
+  extra-resources.yaml -> tenant-extra-resources.yaml - A
+  kes-configuration-secret.yaml -> tenant-kes-configuration-secret.yaml - A
+  tenant-configuration.yaml -> tenant-secret.yaml - M
+  tenant.yaml - M
+  
+values - DONE
+
+  values.yaml - M
