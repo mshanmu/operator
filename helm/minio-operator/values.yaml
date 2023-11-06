@@ -97,6 +97,7 @@ secrets:
 tenant:
   # Tenant name
   name: minio-tenant-1
+  namespace: minio-tenant-1
   ## Registry location and Tag to download MinIO Server image
   image:
     repository: quay.io/minio/minio
