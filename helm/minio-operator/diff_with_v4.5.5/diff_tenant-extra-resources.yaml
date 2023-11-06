@@ -1,0 +1,10 @@
+diff --git a/helm/minio-operator/templates/tenant-extra-resources.yaml b/helm/minio-operator/templates/tenant-extra-resources.yaml
+new file mode 100644
+index 0000000..13c5e9a
+--- /dev/null
++++ b/helm/minio-operator/templates/tenant-extra-resources.yaml
+@@ -0,0 +1,4 @@
++{{- range .Values.extraResources }}
++---
++{{- include "minio-operator.render" (dict "value" . "context" $) }}
++{{- end }}

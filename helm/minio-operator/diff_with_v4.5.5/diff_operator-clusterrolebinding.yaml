@@ -1,0 +1,4 @@
+diff --git a/helm/minio-operator/templates/cluster-role-binding.yaml b/helm/minio-operator/templates/operator-clusterrolebinding.yaml
+similarity index 100%
+rename from helm/minio-operator/templates/cluster-role-binding.yaml
+rename to helm/minio-operator/templates/operator-clusterrolebinding.yaml
