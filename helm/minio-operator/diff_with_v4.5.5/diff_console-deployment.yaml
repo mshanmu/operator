@@ -10,7 +10,7 @@ index 1e34ae5..e224ece 100644
 -  namespace: {{ .Release.Namespace }}
 -  labels:
 -  {{- include "minio-operator.labels" . | nindent 4 }}
-+  name: console
++  name: minio-op-console
 +  labels: {{- include "minio-operator.labels" . | nindent 4 }}
  spec:
    replicas: {{ .Values.console.replicaCount }}

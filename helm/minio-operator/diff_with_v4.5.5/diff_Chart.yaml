@@ -8,7 +8,7 @@ index a17609d..eb04599 100644
 -name: minio-operator
 -version: 4.5.5
 -appVersion: v4.5.5
-+name: operator
++name: minio-operator
 +version: 5.0.10
 +appVersion: v5.0.10
  keywords:
