@@ -89,6 +89,7 @@ console:
 ## Not recommended for production deployments! Create the secret manually instead.
 secrets:
   name: minio1-env-configuration
+  namespace: minio-tenant-1
   # MinIO root user and password
   accessKey: minio
   secretKey: minio123
