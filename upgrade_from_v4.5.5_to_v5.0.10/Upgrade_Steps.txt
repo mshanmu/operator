@@ -1,7 +1,7 @@
-Upgrading minio-operator to v5.0.10
-=====================================
+Upgrading minio-operator from v4.5.5 to v5.0.10
+================================================
 
-1. Helm chart updates
+1. Helm chart updates --> DONE
 
 operator helm update
 -----------------------
@@ -55,4 +55,10 @@ values - DONE
 
   values.yaml - M
 
-2. upgrade it
+2. Helm upgrade --> DONE
+
+3. Check the pods 
+
+4. Check the existing user, group, bucket and files are still present and download to check value
+
+5. Test using test scripts
