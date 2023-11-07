@@ -1,6 +1,8 @@
 Upgrading minio-operator to v5.0.10
 =====================================
 
+1. Helm chart updates
+
 operator helm update
 -----------------------
 
@@ -52,3 +54,5 @@ templates - DONE
 values - DONE
 
   values.yaml - M
+
+2. upgrade it
