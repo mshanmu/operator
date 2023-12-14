@@ -264,9 +264,9 @@ tenant:
   # {"level":"INFO","errKind":"","time":"2022-04-07T21:49:33.740058549Z","message":"All MinIO sub-systems initialized successfully"}
   # Notice they are in JSON format to be consumed
   logging:
-    anonymous: true
+    anonymous: false
     json: true
-    quiet: true
+    quiet: false
   ## serviceMetadata allows passing additional labels and annotations to MinIO and Console specific
   ## services created by the operator.
   serviceMetadata: { }
