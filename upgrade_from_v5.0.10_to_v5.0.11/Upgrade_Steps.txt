@@ -42,13 +42,43 @@ templates - DONE
 values - DONE
 
 
-2. Helm upgrade --> 
+2. Helm upgrade --> DONE
 
-3. Check the pods --> 
+    [mshanmu@mshanmu-r3 operator]$ ./package_deploy.sh 
+    Successfully packaged chart and saved it to: /home/mshanmu/git_workspace/minio/operator/minio-operator-5.0.11.tgz
+    minio-operator-5.0.11.tgz                                                                          100%  108KB  35.9MB/s   00:00    
+    Release "minio-op" has been upgraded. Happy Helming!
+    NAME: minio-op
+    LAST DEPLOYED: Wed Jan 31 15:40:57 2024
+    NAMESPACE: minio-operator
+    STATUS: deployed
+    REVISION: 24
+    TEST SUITE: None
+    NOTES:
+    1. Get the JWT for logging in to the console:
+    kubectl apply -f - <<EOF
+    apiVersion: v1
+    kind: Secret
+    metadata:
+      name: console-sa-secret
+        namespace: minio-operator
+          annotations:
+              kubernetes.io/service-account.name: console-sa
+              type: kubernetes.io/service-account-token
+              EOF
+              kubectl -n minio-operator  get secret console-sa-secret -o jsonpath="{.data.token}" | base64 --decode
 
-4. Check the existing user, group, bucket and files are still present and download to check value --> 
+              2. Get the Operator Console URL by running these commands:
+                kubectl --namespace minio-operator port-forward svc/console 9090:9090
+                  echo "Visit the Operator Console at http://127.0.0.1:9090"
+                  [mshanmu@mshanmu-r3 operator]$ 
 
-5. Test using configuration --> 
+
+3. Check the pods --> DONE
+
+4. Check the existing user, group, bucket and files are still present and download to check value --> DONE
+
+5. Test using configuration --> DONE
 
     [mshanmu@minio-m1 MinIO]$ ./create_minio_config.sh 
     Creating bucket rxbvt36dcjq1i ...
@@ -128,60 +158,301 @@ Checking policy 6iehm4u7f6hdo-1-policy
     Unset policies
 
 
-6. Test using test scripts --> 
+6. Test using test scripts --> DONE
 
     [mshanmu@minio-m1 MinIO]$ ./minio_test.sh 
     Bucket created successfully `minio/test4`.
     Generating random files...
     1+0 records in
     1+0 records out
-    8192 bytes (8.2 kB) copied, 0.000355345 s, 23.1 MB/s
+    8192 bytes (8.2 kB) copied, 0.000258714 s, 31.7 MB/s
     1+0 records in
     1+0 records out
-    8192 bytes (8.2 kB) copied, 0.00030113 s, 27.2 MB/s
+    8192 bytes (8.2 kB) copied, 0.000390148 s, 21.0 MB/s
     128+0 records in
     128+0 records out
-    1048576 bytes (1.0 MB) copied, 0.00792779 s, 132 MB/s
+    1048576 bytes (1.0 MB) copied, 0.00634789 s, 165 MB/s
     1280+0 records in
     1280+0 records out
-    10485760 bytes (10 MB) copied, 0.0759367 s, 138 MB/s
+    10485760 bytes (10 MB) copied, 0.0623137 s, 168 MB/s
     12800+0 records in
     12800+0 records out
-    ...
-    Removed `minio/test4` successfully.
+    104857600 bytes (105 MB) copied, 0.670155 s, 156 MB/s
+    131072+0 records in
+    131072+0 records out
+    1073741824 bytes (1.1 GB) copied, 7.29904 s, 147 MB/s
 
-    Results:
+    Transferring the files into MinIO bucket
 
-     Creating bucket  ✔  
-     Copying file /tmp/tmp.sC3LVbK6s4-SZ-435  ✔  
-     Copying file /tmp/tmp.WB6ZdliiXc-SZ-10K  ✔  
-     Copying file /tmp/tmp.xKGRNyTlgw-SZ-1.0M  ✔  
-     Copying file /tmp/tmp.lkrkpdyuTX-SZ-10M  ✔  
-     Copying file /tmp/tmp.9LCo4ceMAA-SZ-100M  ✔  
-     Copying file /tmp/tmp.LGbQJILV3F-SZ-1.0G  ✔  
-     Downloading file tmp.sC3LVbK6s4-SZ-435 ...  ✔  
-     Downloading file tmp.WB6ZdliiXc-SZ-10K ...  ✔  
-     Downloading file tmp.xKGRNyTlgw-SZ-1.0M ...  ✔  
-     Downloading file tmp.lkrkpdyuTX-SZ-10M ...  ✔  
-     Downloading file tmp.9LCo4ceMAA-SZ-100M ...  ✔  
-     Downloading file tmp.LGbQJILV3F-SZ-1.0G ...  ✔  
-     Verified file /tmp/tmp.sC3LVbK6s4-SZ-435  ✔  
-     Verified file /tmp/tmp.WB6ZdliiXc-SZ-10K  ✔  
-     Verified file /tmp/tmp.xKGRNyTlgw-SZ-1.0M  ✔  
-     Verified file /tmp/tmp.lkrkpdyuTX-SZ-10M  ✔  
-     Verified file /tmp/tmp.9LCo4ceMAA-SZ-100M  ✔  
-     Verified file /tmp/tmp.LGbQJILV3F-SZ-1.0G  ✔  
-     Deleting file tmp.sC3LVbK6s4-SZ-435  ✔  
-     Deleting file tmp.WB6ZdliiXc-SZ-10K  ✔  
-     Deleting file tmp.xKGRNyTlgw-SZ-1.0M  ✔  
-     Deleting file tmp.lkrkpdyuTX-SZ-10M  ✔  
-     Deleting file tmp.9LCo4ceMAA-SZ-100M  ✔  
-     Deleting file tmp.LGbQJILV3F-SZ-1.0G  ✔  
-     PUT Gzip accept encoding file  ✔  
-     Deleting Gzip accept encoding file  ✔  
-     Deleting bucket  ✔  
+    Processing file: /tmp/tmp.BDtbhM49QC-SZ-435
 
-     COMPLETE SUCESS.  
+    ....BDtbhM49QC-SZ-435: 8.00 KiB / 8.00 KiB ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 169.16 KiB/s 0s
+    Processing file: /tmp/tmp.1AV88vfjl1-SZ-10K
 
-     [mshanmu@minio-m1 MinIO]$ 
+    ....1AV88vfjl1-SZ-10K: 8.00 KiB / 8.00 KiB ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 218.22 KiB/s 0s
+    Processing file: /tmp/tmp.7MIwfUH9XT-SZ-1.0M
+
+    ...7MIwfUH9XT-SZ-1.0M: 1.00 MiB / 1.00 MiB ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 157.92 KiB/s 6s
+    Processing file: /tmp/tmp.JjpmMNGJOA-SZ-10M
+
+    ....JjpmMNGJOA-SZ-10M: 10.00 MiB / 10.00 MiB ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 67.14 MiB/s 0s
+    Processing file: /tmp/tmp.syzgp96Nf3-SZ-100M
+
+    ...syzgp96Nf3-SZ-100M: 100.00 MiB / 100.00 MiB ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 162.36 MiB/s 0s
+    Processing file: /tmp/tmp.89hLX6ryZ3-SZ-1.0G
+
+    ...89hLX6ryZ3-SZ-1.0G: 1.00 GiB / 1.00 GiB ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 214.77 MiB/s 4s
+    Download the same files from MinIO bucket
+
+    Processing file: /tmp/tmp.BDtbhM49QC-SZ-435
+
+
+    Processing file: /tmp/tmp.1AV88vfjl1-SZ-10K
+
+
+    Processing file: /tmp/tmp.7MIwfUH9XT-SZ-1.0M
+
+
+    Processing file: /tmp/tmp.JjpmMNGJOA-SZ-10M
+
+
+    Processing file: /tmp/tmp.syzgp96Nf3-SZ-100M
+
+
+    Processing file: /tmp/tmp.89hLX6ryZ3-SZ-1.0G
+
+
+    Checksum comparison
+
+    Processing file: /tmp/tmp.BDtbhM49QC-SZ-435
+
+    Processing file: /tmp/tmp.1AV88vfjl1-SZ-10K
+
+    Processing file: /tmp/tmp.7MIwfUH9XT-SZ-1.0M
+
+    Processing file: /tmp/tmp.JjpmMNGJOA-SZ-10M
+
+    Processing file: /tmp/tmp.syzgp96Nf3-SZ-100M
+
+    Processing file: /tmp/tmp.89hLX6ryZ3-SZ-1.0G
+
+    Deleting the files...
+
+    Processing file: /tmp/tmp.BDtbhM49QC-SZ-435
+
+    Removed `minio/test4/tmp.BDtbhM49QC-SZ-435`.
+
+    Processing file: /tmp/tmp.1AV88vfjl1-SZ-10K
+
+    Removed `minio/test4/tmp.1AV88vfjl1-SZ-10K`.
+
+    Processing file: /tmp/tmp.7MIwfUH9XT-SZ-1.0M
+
+    Removed `minio/test4/tmp.7MIwfUH9XT-SZ-1.0M`.
+
+    Processing file: /tmp/tmp.JjpmMNGJOA-SZ-10M
+
+    Removed `minio/test4/tmp.JjpmMNGJOA-SZ-10M`.
+
+    Processing file: /tmp/tmp.syzgp96Nf3-SZ-100M
+
+    Removed `minio/test4/tmp.syzgp96Nf3-SZ-100M`.
+
+    Processing file: /tmp/tmp.89hLX6ryZ3-SZ-1.0G
+
+    Removed `minio/test4/tmp.89hLX6ryZ3-SZ-1.0G`.
+
+    * About to connect() to 10.233.30.187 port 80 (#0)
+    *   Trying 10.233.30.187...
+    * Connected to 10.233.30.187 (10.233.30.187) port 80 (#0)
+    > PUT /test4/minio_api.sh HTTP/1.1
+    > User-Agent: curl/7.29.0
+    > Accept: */*
+                  > Host: 10.233.30.187
+                  > Date: Wed, 31 Jan 2024 17:28:29 -0500
+                  > Content-Type: application/octet-stream
+                  > Authorization: AWS minio:E1FrKY5tUDCbqEZblkyGu9BPcGA=
+                  > Accept-Encoding: gzip
+                  > Content-Length: 719
+                  > Expect: 100-continue
+                  > 
+                  < HTTP/1.1 100 Continue
+                  * We are completely uploaded and fine
+                  < HTTP/1.1 200 OK
+                  < Accept-Ranges: bytes
+                  < Content-Length: 0
+                  < ETag: "a6779509297137000ddd3685e409c4fe"
+                  < Server: MinIO
+                  < Strict-Transport-Security: max-age=31536000; includeSubDomains
+                  < Vary: Origin
+                  < Vary: Accept-Encoding
+                  < X-Amz-Id-2: a73c720ccba209c1b151b84749ce11dbae79b9cdb0584fdd96fec1ba9077fd9c
+                  < X-Amz-Request-Id: 17AF8F1657E571EA
+                  < X-Content-Type-Options: nosniff
+                  < X-Xss-Protection: 1; mode=block
+                  < Date: Wed, 31 Jan 2024 22:28:29 GMT
+                  < 
+                  * Connection #0 to host 10.233.30.187 left intact
+                  * About to connect() to 10.233.30.187 port 80 (#0)
+                  *   Trying 10.233.30.187...
+                  * Connected to 10.233.30.187 (10.233.30.187) port 80 (#0)
+                  > PUT /test4/minio_api.sh HTTP/1.1
+                  > User-Agent: curl/7.29.0
+                  > Accept: */*
+                                > Host: 10.233.30.187
+                                > Date: Wed, 31 Jan 2024 17:28:29 -0500
+                                > Content-Type: application/octet-stream
+                                > Authorization: AWS minio:E1FrKY5tUDCbqEZblkyGu9BPcGA=
+                                > Accept-Encoding: gzip
+                                > Content-Length: 719
+                                > Expect: 100-continue
+                                > 
+                                < HTTP/1.1 100 Continue
+                                * We are completely uploaded and fine
+                                < HTTP/1.1 200 OK
+                                < Accept-Ranges: bytes
+                                < Content-Length: 0
+                                < ETag: "a6779509297137000ddd3685e409c4fe"
+                                < Server: MinIO
+                                < Strict-Transport-Security: max-age=31536000; includeSubDomains
+                                < Vary: Origin
+                                < Vary: Accept-Encoding
+                                < X-Amz-Id-2: 7c6f2f7f9ccc57a819f6e17b85ef83ba5ddc4dd9f3c8d4e71b8a5c07d840a1b9
+                                < X-Amz-Request-Id: 17AF8F1697164E14
+                                < X-Content-Type-Options: nosniff
+                                < X-Xss-Protection: 1; mode=block
+                                < Date: Wed, 31 Jan 2024 22:28:31 GMT
+                                < 
+                                * Connection #0 to host 10.233.30.187 left intact
+                                * About to connect() to 10.233.30.187 port 80 (#0)
+                                *   Trying 10.233.30.187...
+                                * Connected to 10.233.30.187 (10.233.30.187) port 80 (#0)
+                                > PUT /test4/minio_api.sh HTTP/1.1
+                                > User-Agent: curl/7.29.0
+                                > Accept: */*
+                                              > Host: 10.233.30.187
+                                              > Date: Wed, 31 Jan 2024 17:28:29 -0500
+                                              > Content-Type: application/octet-stream
+                                              > Authorization: AWS minio:E1FrKY5tUDCbqEZblkyGu9BPcGA=
+                                              > Accept-Encoding: gzip
+                                              > Content-Length: 719
+                                              > Expect: 100-continue
+                                              > 
+                                              < HTTP/1.1 100 Continue
+                                              * We are completely uploaded and fine
+                                              < HTTP/1.1 200 OK
+                                              < Accept-Ranges: bytes
+                                              < Content-Length: 0
+                                              < ETag: "a6779509297137000ddd3685e409c4fe"
+                                              < Server: MinIO
+                                              < Strict-Transport-Security: max-age=31536000; includeSubDomains
+                                              < Vary: Origin
+                                              < Vary: Accept-Encoding
+                                              < X-Amz-Id-2: 4a64eaaad2b542e97b0a0a99e2eda4afc26c91996ba7708831f1a5cdc416b442
+                                              < X-Amz-Request-Id: 17AF8F16D59D4149
+                                              < X-Content-Type-Options: nosniff
+                                              < X-Xss-Protection: 1; mode=block
+                                              < Date: Wed, 31 Jan 2024 22:28:32 GMT
+                                              < 
+                                              * Connection #0 to host 10.233.30.187 left intact
+                                              * About to connect() to 10.233.30.187 port 80 (#0)
+                                              *   Trying 10.233.30.187...
+                                              * Connected to 10.233.30.187 (10.233.30.187) port 80 (#0)
+                                              > PUT /test4/minio_api.sh HTTP/1.1
+                                              > User-Agent: curl/7.29.0
+                                              > Accept: */*
+                                                            > Host: 10.233.30.187
+                                                            > Date: Wed, 31 Jan 2024 17:28:29 -0500
+                                                            > Content-Type: application/octet-stream
+                                                            > Authorization: AWS minio:E1FrKY5tUDCbqEZblkyGu9BPcGA=
+                                                            > Accept-Encoding: gzip
+                                                            > Content-Length: 719
+                                                            > Expect: 100-continue
+                                                            > 
+                                                            < HTTP/1.1 100 Continue
+                                                            * We are completely uploaded and fine
+                                                            < HTTP/1.1 200 OK
+                                                            < Accept-Ranges: bytes
+                                                            < Content-Length: 0
+                                                            < ETag: "a6779509297137000ddd3685e409c4fe"
+                                                            < Server: MinIO
+                                                            < Strict-Transport-Security: max-age=31536000; includeSubDomains
+                                                            < Vary: Origin
+                                                            < Vary: Accept-Encoding
+                                                            < X-Amz-Id-2: 837c3132094fe5da4e07130ce316def3ac33972d7777c6bf2be553824f74f822
+                                                            < X-Amz-Request-Id: 17AF8F1713B61A5E
+                                                            < X-Content-Type-Options: nosniff
+                                                            < X-Xss-Protection: 1; mode=block
+                                                            < Date: Wed, 31 Jan 2024 22:28:33 GMT
+                                                            < 
+                                                            * Connection #0 to host 10.233.30.187 left intact
+                                                            * About to connect() to 10.233.30.187 port 80 (#0)
+                                                            *   Trying 10.233.30.187...
+                                                            * Connected to 10.233.30.187 (10.233.30.187) port 80 (#0)
+                                                            > PUT /test4/minio_api.sh HTTP/1.1
+                                                            > User-Agent: curl/7.29.0
+                                                            > Accept: */*
+                                                                          > Host: 10.233.30.187
+                                                                          > Date: Wed, 31 Jan 2024 17:28:29 -0500
+                                                                          > Content-Type: application/octet-stream
+                                                                          > Authorization: AWS minio:E1FrKY5tUDCbqEZblkyGu9BPcGA=
+                                                                          > Accept-Encoding: gzip
+                                                                          > Content-Length: 719
+                                                                          > Expect: 100-continue
+                                                                          > 
+                                                                          < HTTP/1.1 100 Continue
+                                                                          * We are completely uploaded and fine
+                                                                          < HTTP/1.1 200 OK
+                                                                          < Accept-Ranges: bytes
+                                                                          < Content-Length: 0
+                                                                          < ETag: "a6779509297137000ddd3685e409c4fe"
+                                                                          < Server: MinIO
+                                                                          < Strict-Transport-Security: max-age=31536000; includeSubDomains
+                                                                          < Vary: Origin
+                                                                          < Vary: Accept-Encoding
+                                                                          < X-Amz-Id-2: 8c5ddc1bbf0fd4ff3d2084ddbb9fdc213a67f47fe04fce22e600d3aeeb22656d
+                                                                          < X-Amz-Request-Id: 17AF8F1751BF2588
+                                                                          < X-Content-Type-Options: nosniff
+                                                                          < X-Xss-Protection: 1; mode=block
+                                                                          < Date: Wed, 31 Jan 2024 22:28:34 GMT
+                                                                          < 
+                                                                          * Connection #0 to host 10.233.30.187 left intact
+                                                                          Removed `minio/test4/minio_api.sh`.
+                                                                          Removed `minio/test4` successfully.
+
+                                                                          Results:
+
+                                                                           Creating bucket  ✔  
+                                                                            Copying file /tmp/tmp.BDtbhM49QC-SZ-435  ✔  
+                                                                             Copying file /tmp/tmp.1AV88vfjl1-SZ-10K  ✔  
+                                                                              Copying file /tmp/tmp.7MIwfUH9XT-SZ-1.0M  ✔  
+                                                                               Copying file /tmp/tmp.JjpmMNGJOA-SZ-10M  ✔  
+                                                                                Copying file /tmp/tmp.syzgp96Nf3-SZ-100M  ✔  
+                                                                                 Copying file /tmp/tmp.89hLX6ryZ3-SZ-1.0G  ✔  
+                                                                                  Downloading file tmp.BDtbhM49QC-SZ-435 ...  ✔  
+                                                                                   Downloading file tmp.1AV88vfjl1-SZ-10K ...  ✔  
+                                                                                    Downloading file tmp.7MIwfUH9XT-SZ-1.0M ...  ✔  
+                                                                                     Downloading file tmp.JjpmMNGJOA-SZ-10M ...  ✔  
+                                                                                      Downloading file tmp.syzgp96Nf3-SZ-100M ...  ✔  
+                                                                                       Downloading file tmp.89hLX6ryZ3-SZ-1.0G ...  ✔  
+                                                                                        Verified file /tmp/tmp.BDtbhM49QC-SZ-435  ✔  
+                                                                                         Verified file /tmp/tmp.1AV88vfjl1-SZ-10K  ✔  
+                                                                                          Verified file /tmp/tmp.7MIwfUH9XT-SZ-1.0M  ✔  
+                                                                                           Verified file /tmp/tmp.JjpmMNGJOA-SZ-10M  ✔  
+                                                                                            Verified file /tmp/tmp.syzgp96Nf3-SZ-100M  ✔  
+                                                                                             Verified file /tmp/tmp.89hLX6ryZ3-SZ-1.0G  ✔  
+                                                                                              Deleting file tmp.BDtbhM49QC-SZ-435  ✔  
+                                                                                               Deleting file tmp.1AV88vfjl1-SZ-10K  ✔  
+                                                                                                Deleting file tmp.7MIwfUH9XT-SZ-1.0M  ✔  
+                                                                                                 Deleting file tmp.JjpmMNGJOA-SZ-10M  ✔  
+                                                                                                  Deleting file tmp.syzgp96Nf3-SZ-100M  ✔  
+                                                                                                   Deleting file tmp.89hLX6ryZ3-SZ-1.0G  ✔  
+                                                                                                    PUT Gzip accept encoding file  ✔  
+                                                                                                     Deleting Gzip accept encoding file  ✔  
+                                                                                                      Deleting bucket  ✔  
+
+                                                                                                       COMPLETE SUCESS.  
+
+                                                                                                       [mshanmu@minio-m1 MinIO]$ 
+
 
