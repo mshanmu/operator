@@ -9,7 +9,7 @@ operator:
       value: "cluster.local"
   image:
     repository: quay.io/minio/operator
-    tag: v5.0.10
+    tag: v5.0.11
     pullPolicy: IfNotPresent
   imagePullSecrets: [ ]
   runtimeClassName: ~
@@ -47,9 +47,10 @@ operator:
       ephemeral-storage: 500Mi
 
 console:
+  enabled: true
   image:
     repository: quay.io/minio/operator
-    tag: v5.0.10
+    tag: v5.0.11
     pullPolicy: IfNotPresent
   env: [ ]
   imagePullSecrets: [ ]
@@ -82,8 +83,13 @@ console:
     host: console.local
     path: /
     pathType: Prefix
-  volumes: [ ]
-  volumeMounts: [ ]
+  volumes:
+    - name: tmp
+      emptyDir: {}
+  volumeMounts:
+    - name: tmp
+      readOnly: false
+      mountPath: /tmp/certs/CAs
 
 ## Secret with default environment variable configurations to be used by MinIO Tenant.
 ## Not recommended for production deployments! Create the secret manually instead.
@@ -278,6 +284,8 @@ tenant:
   - name: MINIO_ARGS
     value: "http://minio-tenant-1-ss-1-{0...3}.minio-tenant-1-hl.minio-tenant-1.svc.cluster.local/export/data http://minio-tenant-1-ss-2-{0...31}.minio-tenant-1-hl.minio-tenant-1.svc.cluster.local/export/data"
   priorityClassName: ""
+  additionalVolumes: [ ]
+  additionalVolumeMounts: [ ]
 
 ingress:
   api:

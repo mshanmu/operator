@@ -1,0 +1,187 @@
+Upgrading minio-operator from v4.5.5 to v5.0.10
+================================================
+
+1. Helm chart updates --> DONE
+
+operator helm update
+-----------------------
+
+Chart.yaml - DONE
+
+crds - DONE
+
+    minio.min.io_tenants.yaml - M
+
+templates - DONE
+
+    console-clusterrole.yaml - M
+    console-clusterrolebinding.yaml - M
+    console-configmap.yaml - M
+    console-deployment.yaml - M
+    console-ingress.yaml - M
+    console-secret.yaml - M
+    console-service.yaml - M
+    console-serviceaccount.yaml - M
+    operator-clusterrole.yaml - M
+    operator-deployment.yaml - M
+    operator-service.yaml - M
+    operator-serviceaccount.yaml - M
+    sts-service.yaml - M
+
+
+values - DONE
+
+                                              
+tenant helm update
+--------------------
+
+templates - DONE
+
+    tenant.yaml - M
+
+values - DONE
+
+
+2. Helm upgrade --> 
+
+3. Check the pods --> 
+
+4. Check the existing user, group, bucket and files are still present and download to check value --> 
+
+5. Test using configuration --> 
+
+    [mshanmu@minio-m1 MinIO]$ ./create_minio_config.sh 
+    Creating bucket rxbvt36dcjq1i ...
+    Bucket created successfully `minio/rxbvt36dcjq1i`.
+    Added user `rxbvt36dcjq1i-user` successfully.
+    Added members `rxbvt36dcjq1i-user` to group `rxbvt36dcjq1i-group` successfully.
+    Created policy `rxbvt36dcjq1i-1-policy` successfully.
+    Created policy `rxbvt36dcjq1i-2-policy` successfully.
+    Created policy `rxbvt36dcjq1i-3-policy` successfully.
+    Attached Policies: [rxbvt36dcjq1i-1-policy]
+    To Group: rxbvt36dcjq1i-group
+    Attached Policies: [rxbvt36dcjq1i-2-policy]
+    To Group: rxbvt36dcjq1i-group
+    Attached Policies: [rxbvt36dcjq1i-3-policy]
+    To Group: rxbvt36dcjq1i-group
+    .../MinIO/file_10mb.txt: 10.00 MiB / 10.00 MiB ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 59.83 MiB/s 0sCreating bucket 6iehm4u7f6hdo ...
+    Bucket created successfully `minio/6iehm4u7f6hdo`.
+    Added user `6iehm4u7f6hdo-user` successfully.
+    Added members `6iehm4u7f6hdo-user` to group `6iehm4u7f6hdo-group` successfully.
+    Created policy `6iehm4u7f6hdo-1-policy` successfully.
+    Created policy `6iehm4u7f6hdo-2-policy` successfully.
+    Created policy `6iehm4u7f6hdo-3-policy` successfully.
+    Attached Policies: [6iehm4u7f6hdo-1-policy]
+    To Group: 6iehm4u7f6hdo-group
+    Attached Policies: [6iehm4u7f6hdo-2-policy]
+    To Group: 6iehm4u7f6hdo-group
+    Attached Policies: [6iehm4u7f6hdo-3-policy]
+    To Group: 6iehm4u7f6hdo-group
+    .../MinIO/file_10mb.txt: 10.00 MiB / 10.00 MiB ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 55.12 MiB/s 0sCreating bucket utsup320ylme9 ...
+
+    [mshanmu@minio-m1 MinIO]$ ./minio_restart_check_config.sh
+    Trying 2 out 10 ...
+    Restart command successfully sent to `minio`. Type Ctrl-C to quit or wait to follow the status of the restart process.
+    .....!
+    Restarted `minio` successfully in 4 seconds
+    Sleeping for 10 seconds after restart
+    ●  minio-tenant-1-ss-1-0.minio-tenant-1-hl.minio-tenant-1.svc.cluster.local:9000
+       Uptime: 15 seconds 
+          Version: 2023-11-06T22:26:08Z
+    ...
+    Checking bucket 6iehm4u7f6hdo
+    [2023-11-07 09:03:48 EST]  10MiB STANDARD file_10mb.txt
+    Checking group 6iehm4u7f6hdo-group
+    Group: 6iehm4u7f6hdo-group
+    Status: enabled
+    Policy: 6iehm4u7f6hdo-1-policy,6iehm4u7f6hdo-2-policy,6iehm4u7f6hdo-3-policy
+    Members: 6iehm4u7f6hdo-user
+    Checking user 6iehm4u7f6hdo-user
+    AccessKey: 6iehm4u7f6hdo-user
+    Status: enabled
+    PolicyName: 
+MemberOf: [6iehm4u7f6hdo-group]
+Checking policy 6iehm4u7f6hdo-1-policy
+
+    [mshanmu@minio-m1 MinIO]$ ./delete_minio_config.sh 
+    Deleting bucket 6iehm4u7f6hdo
+    Unset policies
+    Detached Policies: [6iehm4u7f6hdo-1-policy]
+    From Group: 6iehm4u7f6hdo-group
+    Detached Policies: [6iehm4u7f6hdo-2-policy]
+    From Group: 6iehm4u7f6hdo-group
+    Detached Policies: [6iehm4u7f6hdo-3-policy]
+    From Group: 6iehm4u7f6hdo-group
+    Delete policies
+    Removed policy `6iehm4u7f6hdo-1-policy` successfully.
+    Removed policy `6iehm4u7f6hdo-2-policy` successfully.
+    Removed policy `6iehm4u7f6hdo-3-policy` successfully.
+    Delete user
+    Removed user `6iehm4u7f6hdo-user` successfully.
+    Delete group
+    Removed group 6iehm4u7f6hdo-group successfully.
+    Delete files
+    Removed `minio/6iehm4u7f6hdo/file_10mb.txt`.
+    Delete bucket
+    Removed `minio/6iehm4u7f6hdo` successfully.
+    Deleting bucket ahlifjuu26vaw
+    Unset policies
+
+
+6. Test using test scripts --> 
+
+    [mshanmu@minio-m1 MinIO]$ ./minio_test.sh 
+    Bucket created successfully `minio/test4`.
+    Generating random files...
+    1+0 records in
+    1+0 records out
+    8192 bytes (8.2 kB) copied, 0.000355345 s, 23.1 MB/s
+    1+0 records in
+    1+0 records out
+    8192 bytes (8.2 kB) copied, 0.00030113 s, 27.2 MB/s
+    128+0 records in
+    128+0 records out
+    1048576 bytes (1.0 MB) copied, 0.00792779 s, 132 MB/s
+    1280+0 records in
+    1280+0 records out
+    10485760 bytes (10 MB) copied, 0.0759367 s, 138 MB/s
+    12800+0 records in
+    12800+0 records out
+    ...
+    Removed `minio/test4` successfully.
+
+    Results:
+
+     Creating bucket  ✔  
+     Copying file /tmp/tmp.sC3LVbK6s4-SZ-435  ✔  
+     Copying file /tmp/tmp.WB6ZdliiXc-SZ-10K  ✔  
+     Copying file /tmp/tmp.xKGRNyTlgw-SZ-1.0M  ✔  
+     Copying file /tmp/tmp.lkrkpdyuTX-SZ-10M  ✔  
+     Copying file /tmp/tmp.9LCo4ceMAA-SZ-100M  ✔  
+     Copying file /tmp/tmp.LGbQJILV3F-SZ-1.0G  ✔  
+     Downloading file tmp.sC3LVbK6s4-SZ-435 ...  ✔  
+     Downloading file tmp.WB6ZdliiXc-SZ-10K ...  ✔  
+     Downloading file tmp.xKGRNyTlgw-SZ-1.0M ...  ✔  
+     Downloading file tmp.lkrkpdyuTX-SZ-10M ...  ✔  
+     Downloading file tmp.9LCo4ceMAA-SZ-100M ...  ✔  
+     Downloading file tmp.LGbQJILV3F-SZ-1.0G ...  ✔  
+     Verified file /tmp/tmp.sC3LVbK6s4-SZ-435  ✔  
+     Verified file /tmp/tmp.WB6ZdliiXc-SZ-10K  ✔  
+     Verified file /tmp/tmp.xKGRNyTlgw-SZ-1.0M  ✔  
+     Verified file /tmp/tmp.lkrkpdyuTX-SZ-10M  ✔  
+     Verified file /tmp/tmp.9LCo4ceMAA-SZ-100M  ✔  
+     Verified file /tmp/tmp.LGbQJILV3F-SZ-1.0G  ✔  
+     Deleting file tmp.sC3LVbK6s4-SZ-435  ✔  
+     Deleting file tmp.WB6ZdliiXc-SZ-10K  ✔  
+     Deleting file tmp.xKGRNyTlgw-SZ-1.0M  ✔  
+     Deleting file tmp.lkrkpdyuTX-SZ-10M  ✔  
+     Deleting file tmp.9LCo4ceMAA-SZ-100M  ✔  
+     Deleting file tmp.LGbQJILV3F-SZ-1.0G  ✔  
+     PUT Gzip accept encoding file  ✔  
+     Deleting Gzip accept encoding file  ✔  
+     Deleting bucket  ✔  
+
+     COMPLETE SUCESS.  
+
+     [mshanmu@minio-m1 MinIO]$ 
+
